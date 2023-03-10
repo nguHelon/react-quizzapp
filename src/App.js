@@ -30,6 +30,22 @@ const App = () => {
             );
     }, [play]);
 
+    useEffect(() => {
+        if (quizzes.length > 0) {
+            setMarkedAnswers(() => {
+                return quizzes.map(quiz => {
+                    return {
+                        quizId: quiz.id,
+                        answerState: quiz.isChoosed,
+                        correctAnswer: quiz.isChoosed ? 1 : 0
+                    }
+                })
+            })
+        } else {
+            setMarkedAnswers([])
+        }
+    }, [quizzes]);
+
     function handlePlay() {
         setPlay(prevPlay => !prevPlay);
     }
@@ -52,32 +68,21 @@ const App = () => {
     }
 
     function handleGame() {
-
-        setMarkedAnswers(() => {
-            console.log("hello");
-            return quizzes.map(quiz => {
-                return {
-                    quizId: quiz.id,
-                    answerState: quiz.isChoosed,
-                    correctAnswer: quiz.isChoosed ? 1 : 0
+        if (endGame === false) {
+            setScore(prevScore => {
+                let scores = markedAnswers.map((ans) => ans.correctAnswer);
+                for (let i = 0; i < scores.length; i++) {
+                    prevScore += scores[i];
                 }
+                return prevScore;
             })
-        })
-
-        setScore(prevScore => {
-            let scores = markedAnswers.map((ans) => ans.correctAnswer);
-            console.log(scores)
-            console.log(markedAnswers)
-            for (let i = 0; i < scores.length; i++) {
-                prevScore += scores[i];
-            }
-            console.log(prevScore)
-            return prevScore;
-        })
-        setEndGame(prevGame => !prevGame);
+            setEndGame(prevGame => !prevGame)
+        } else {
+            handlePlay();
+            setEndGame(false);
+            setScore(0)
+        }
     }
-
-    console.log(quizzes)
 
 
     let newQuizzes = quizzes.map(quiz => {

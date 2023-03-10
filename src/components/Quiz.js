@@ -3,8 +3,9 @@ import { nanoid } from "nanoid"
 import Answers from "./Answers";
 
 const Quiz = ({ quizId, question, correctAns, incorrectAns, handleChoice }) => {
-    let allAnswers = incorrectAns.concat([correctAns]);
-    let allAnswerBtns = allAnswers.map((answer) => {
+    let random = Math.floor(Math.random() * incorrectAns.length);
+    incorrectAns.splice(random, 0, correctAns);
+    let allAnswerBtns = incorrectAns.map((answer) => {
         return {
             id: nanoid(),
             answer: answer,
