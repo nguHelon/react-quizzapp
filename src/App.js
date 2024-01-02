@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import Quiz from "./components/Quiz"
+import Quiz from "./components/Quiz.js"
 import "./App.css"
 
 const App = () => {

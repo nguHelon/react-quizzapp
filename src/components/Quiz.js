@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { nanoid } from "nanoid"
-import Answers from "./Answers";
+import Answers from "./Answers.js";
 
 const Quiz = ({ quizId, question, correctAns, incorrectAns, handleChoice }) => {
     let random = Math.floor(Math.random() * incorrectAns.length);
